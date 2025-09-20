@@ -105,29 +105,23 @@ gtkwave --version
 ### 2) Yosys (build from source)
 
 ```
-sudo apt-get install -y clang bison flex libreadline-dev gawk tcl-dev \
-  libffi-dev git graphviz xdot pkg-config python3 libboost-system-dev \
-  libboost-python-dev libboost-filesystem-dev zlib1g-dev
+sudo apt install yosys
+```
 
-git clone https://github.com/YosysHQ/yosys.git
-cd yosys
-make config-gcc
-make
-sudo make install
+Quick check:
+```
 yosys -V
 ```
 
 ### 3) NGSpice
 
-Download tarball from SourceForge (choose latest ngspice‑XX.tar.gz), then:
-
 ```
-tar -zxvf ngspice-37.tar.gz
-cd ngspice-37
-mkdir release && cd release
-../configure --with-x --with-readline=yes --disable-debug
-make
-sudo make install
+sudo apt update
+sudo apt install -y ngspice
+```
+
+Quick check:
+```
 ngspice -v
 ```
 
