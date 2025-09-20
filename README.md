@@ -2,7 +2,7 @@
 # 🖥️ RISC-V Reference SoC Tapeout Program – VSD
 
 [![RISC-V](https://img.shields.io/static/v1?label=RISC-V&message=Open%20ISA&color=%23FF671F&labelColor=%23FF671F&style=for-the-badge)](https://riscv.org/)
-[![VSD](https://img.shields.io/static/v1?label=VSD&message=VLSI%20System%20Design&color=%23F2F2F2&labelColor=%23111111&style=for-the-badge)](https://www.vlsisystemdesign.com/)
+[![VSD](https://img.shields.io/static/v1?label=VSD&message=VLSI%20System%20Design&color=FFFFFF&labelColor=FFFFFF&style=for-the-badge&borderColor=000000&borderStyle=solid)](https://www.vlsisystemdesign.com/)
 [![ISM](https://img.shields.io/static/v1?label=ISM&message=Make%20in%20India&color=%23046A38&labelColor=%23046A38&style=for-the-badge)](https://www.makeinindia.com/)
 
 Welcome to my repository for the **RISC-V SoC Tapeout Program** organized by **VLSI System Design (VSD)**.  
@@ -64,15 +64,6 @@ Note: The above is a visual guide; create folders in the repo to match this layo
 | Parasitic Extraction | [OpenROAD (SPEF/RCX)](https://theopenroadproject.org/) | RC parasitic extraction to generate SPEF for timing correlation and signoff refinement. |
 | GDS Export & View | [KLayout](https://www.klayout.de/) | Final GDSII visualization, layer map inspection, and sanity checks before tapeout packaging. |
 | Flow Orchestration | [OpenLane](https://theopenroadproject.org/openlane/) | Automated, reproducible RTL-to-GDSII pipeline coordinating the above tools via configurable stages. |
-
-Badges for quick reference:  
-[![OpenLane](https://img.shields.io/static/v1?label=OpenLane&message=Flow&color=0A7)](https://theopenroadproject.org/openlane/)
-[![OpenROAD](https://img.shields.io/static/v1?label=OpenROAD&message=PnR&color=0A7)](https://theopenroadproject.org/)
-[![OpenSTA](https://img.shields.io/static/v1?label=OpenSTA&message=Timing&color=0A7)](https://theopenroadproject.org/)
-[![Magic](https://img.shields.io/static/v1?label=Magic&message=DRC/Layout&color=8E44AD)](http://opencircuitdesign.com/magic/)
-[![Netgen](https://img.shields.io/static/v1?label=Netgen&message=LVS&color=8E44AD)](http://opencircuitdesign.com/netgen/)
-[![KLayout](https://img.shields.io/static/v1?label=KLayout&message=GDSII&color=E74C3C)](https://www.klayout.de/)
-[![Yosys](https://img.shields.io/static/v1?label=Yosys&message=Synth&color=2E7D32)](https://yosyshq.net/yosys/)
 
 ---
 
