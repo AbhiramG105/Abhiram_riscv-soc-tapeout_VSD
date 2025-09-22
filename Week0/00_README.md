@@ -141,6 +141,14 @@ magic -version
 cd ..
 ```
 
+Quick check:
+```
+magic -dnull -noconsole
+version
+quit
+EOF
+```
+
 ### 5) OpenSTA 
 
 ```
@@ -299,17 +307,23 @@ python3 -m venv -h
 ```
 Week0/
 ├── README.md
+├── logs
+    ├── yosys_run.log             
+    ├── iverilog_run.log         
+    ├── opensta_run.log           
+    ├── docker_hello_world.log    
+    ├── openlane_make.log        
+    ├── openlane_make_test.log    
 ├── screenshots/
-  │ ├── gtkwave_waveform.png     
-  │ ├── magic_demo.png            
-├── logs/
-  │ ├── yosys_install.log         
-  │ ├── iverilog_ok.log          
-  │ ├── opensta_report.log       
-  │ ├── docker_hello_world.log    
-  │ ├── openlane_make.log        
-  │ └── openlane_make_test.log    
-
+    │ ├── gtkwave_waveform.png      
+    │ └── magic_demo.png            
+└── version_check/
+    │ ├── gtkwave_version.md
+    │ ├── iverilog_version.md
+    │ ├── magic_version.md
+    │ ├── ngspice.md
+    │ ├── ngspice.md
+    │ └── yosys opensta docker_verison.md
 ```
 
 - Save terminal outputs under `logs/` for traceability.  
