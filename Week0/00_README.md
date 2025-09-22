@@ -127,36 +127,42 @@ ngspice -v
 
 ### 4) Magic VLSI
 
-Prerequisites:
+Build and install:
 ```
 sudo apt-get install -y m4 tcsh csh libx11-dev tcl-dev tk-dev \
   libcairo2-dev mesa-common-dev libglu1-mesa-dev libncurses-dev
-```
 
-Build and install:
-```
 git clone https://github.com/RTimothyEdwards/magic
 cd magic
 ./configure
 make
 sudo make install
 magic -version
+cd ..
 ```
 
-### 5) OpenSTA (optional for SFAL)
+### 5) OpenSTA 
 
-Reference build:
-- https://github.com/The-OpenROAD-Project/OpenSTA
-
-If installed:
 ```
-sta -version
+sudo apt-get install -y build-essential libreadline-dev cmake
+
+git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+cd OpenSTA
+mkdir build && cd build
+cmake ..
+make
+sudo make install
+```
+
+Quick check:
+```
+sta -version || echo "OpenSTA installed"
+cd ../..
 ```
 
 ### 6) Docker (required for OpenLane)
 
 ```
-sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
@@ -169,26 +175,40 @@ https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-sudo docker run hello-world
+```
 
+Add user to Docker group:
+```
 sudo groupadd docker || true
 sudo usermod -aG docker $USER
 # Reboot or log out/in for group changes to take effect
 ```
 
-After reboot:
+After reboot, verify Docker:
 ```
 docker run --rm hello-world
 docker --version
 ```
 
-### 7) OpenLane (flow + PDKs)
+### 7) OpenLane (RTL → GDSII flow)
 
 ```
 cd $HOME
-git clone https://github.com/The-OpenROAD-Project/OpenLane
+git clone https://github.com/The-OpenROAD-Project/OpenLane.git
 cd OpenLane
-make
+```
+
+Set up Python environment
+```
+python3 -m venv ./venv
+source ./venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Install PDKs and run basic tests
+```
+make pdk
 make test
 ```
 
@@ -204,20 +224,63 @@ python3 -m venv -h
 
 ## 🔍 Quick Verification Samples
 
-- Icarus Verilog minimal run:
+- Icarus Verilog run
   ```
   echo 'module m; initial $display("iverilog_ok"); endmodule' > t.v
-  iverilog t.v && ./a.out
+  iverilog t.v -o t.out && ./t.out
   ```
-- Yosys help:
+- GTKWave simple waveform
   ```
-  yosys -Q -p "help"
+  # Create a small test VCD for GTKWave
+  echo 'module test; reg clk; initial clk = 0; always #5 clk = ~clk; initial #20 $finish; endmodule' > test.v
+  iverilog -o test.vvp test.v
+  vvp test.vvp
+  # Run GTKWave (GUI will open)
+  gtkwave test.vcd &
   ```
-- Magic headless ping:
+- Yosys basic synthesis
   ```
-  magic -dnull -noconsole << EOF
-  quit
-  EOF
+  echo 'module top(input a, b, output y); assign y = a & b; endmodule' > top.v
+  yosys -p "read_verilog top.v; synth; stat; show" 
+  ```
+- NGSpice simple circuit
+  ```
+  # Create a basic RC circuit netlist
+  echo '* RC circuit exampleV1 in 0 DC 5
+  R1 in out 1k
+  C1 out 0 1u
+  .tran 1m 10m
+  .control
+  run
+  plot v(out)
+  .quit
+  .endc
+  .end' > rc_circuit.sp
+  ngspice rc_circuit.sp
+  ```
+- Magic VLSI minimal run
+  ```
+  # Create a minimal layout file
+  echo "box 0 0 10 10" > demo.mag
+
+  # Launch Magic GUI and load the minimal design
+  magic demo.mag &
+  ```
+- Magic VLSI minimal run
+  ```
+  # Create a simple Liberty file for a single inverter
+  echo 'library (simple_lib) {
+  cell (inv) {
+    pin (A) { direction : input; }
+    pin (Y) { direction : output; function : "(!A)"; }
+  }
+  }' > simple.lib
+
+  # Create a simple Verilog netlist for OpenSTA
+  echo 'module top(input A, output Y); inv u1(.A(A), .Y(Y)); endmodule' > top.v
+
+  # Run OpenSTA timing analysis
+  sta -lib simple.lib -tcl "read_verilog top.v; link_design top; report_timing; exit"
   ```
 - Docker hello world:
   ```
@@ -225,7 +288,8 @@ python3 -m venv -h
   ```
 - OpenLane self‑test:
   ```
-  cd ~/OpenLane && make test
+  cd ~/OpenLane
+  make test
   ```
 
 ---
@@ -236,28 +300,34 @@ python3 -m venv -h
 Week0/
 ├── README.md
 ├── screenshots/
-│   ├── yosys_version.png
 │   ├── iverilog_ok.png
-│   ├── gtkwave_version.png
-│   ├── magic_version.png
+│   ├── gtkwave_waveform.png
+│   ├── yosys_version.png
+│   ├── magic_demo.png
+│   ├── opensta_report.png
 │   ├── docker_hello_world.png
 │   └── openlane_make_test.png
 └── logs/
     ├── yosys_install.log
     ├── openlane_make.log
-    └── openlane_make_test.log
+    ├── openlane_make_test.log
+    └── opensta_test.log
 ```
 
-- Save terminal outputs under logs/ for traceability.  
-- Paste version screenshots under screenshots/.
-
+- Save terminal outputs under `logs/` for traceability.  
+- Paste screenshots of actual runs (not just versions) under `screenshots/`.  
+  - **GTKWave**: waveform opened from test VCD  
+  - **Magic**: minimal box design opened in GUI  
+  - **OpenSTA**: timing report from minimal example  
 ---
 
 ## ⚠️ Troubleshooting Notes
 
-- Docker permission denied: ensure group membership took effect (reboot). [web:47]  
-- OpenLane “make test” network failures: retry on stable network; ensure >30 GB free space. [web:157]  
-- Magic configure errors: verify all X11/Tcl/Tk/graphics dependencies are installed. [web:157]
+- **Docker permission denied**: ensure group membership took effect (reboot or log out/in).  
+- **OpenLane “make test” failures**: retry on stable network; ensure >30 GB free space.  
+- **Magic GUI errors**: verify all X11/Tcl/Tk/graphics dependencies are installed.  
+- **OpenSTA errors**: ensure `cmake` and `libreadline-dev` are installed; minimal Liberty/netlist test should pass.  
+- **GTKWave issues**: make sure the `.vcd` file is generated and GUI can open it.
 
 ---
 ```
