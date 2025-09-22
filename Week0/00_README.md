@@ -274,7 +274,7 @@ python3 -m venv -h
   # Launch Magic GUI and load the minimal design
   magic demo.mag &
   ```
-- Magic VLSI minimal run
+- OpenSTA minimal run
   ```
   # Create a simple Liberty file for a single inverter
   echo 'library (simple_lib) {
@@ -287,8 +287,8 @@ python3 -m venv -h
   # Create a simple Verilog netlist for OpenSTA
   echo 'module top(input A, output Y); inv u1(.A(A), .Y(Y)); endmodule' > top.v
 
-  # Run OpenSTA timing analysis
-  sta -lib simple.lib -tcl "read_verilog top.v; link_design top; report_timing; exit"
+  # Run OpenSTA timing analysis and log output
+  sta -lib simple.lib -tcl "read_verilog top.v; link_design top; report_timing; exit" &> Week0/logs/opensta_run.log
   ```
 - Docker hello world:
   ```
@@ -307,15 +307,15 @@ python3 -m venv -h
 ```
 Week0/
 ├── README.md
-├── logs
-    ├── yosys_run.log             
+├── logs           
     ├── iverilog_run.log         
     ├── opensta_run.log           
     ├── docker_hello_world.log    
     ├── openlane_make.log        
     ├── openlane_make_test.log    
 ├── screenshots/
-    │ ├── gtkwave_waveform.png      
+    │ ├── gtkwave_waveform.png
+    | ├── yosys_run.log    
     │ └── magic_demo.png            
 └── version_check/
     │ ├── gtkwave_version.md
