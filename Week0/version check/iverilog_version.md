@@ -1,6 +1,6 @@
 ### Quick CLI Output Verification
 
-The following output shows the installed versions of **Icarus Verilog** and **GTKWave**:
+The following output shows the installed versions of **Icarus Verilog**
 
 ```text
 Icarus Verilog version 12.0 (stable) ()
