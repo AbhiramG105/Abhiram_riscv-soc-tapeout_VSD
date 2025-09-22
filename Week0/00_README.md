@@ -300,25 +300,20 @@ python3 -m venv -h
 Week0/
 ├── README.md
 ├── screenshots/
-│   ├── iverilog_ok.png
-│   ├── gtkwave_waveform.png
-│   ├── yosys_version.png
-│   ├── magic_demo.png
-│   ├── opensta_report.png
-│   ├── docker_hello_world.png
-│   └── openlane_make_test.png
-└── logs/
-    ├── yosys_install.log
-    ├── openlane_make.log
-    ├── openlane_make_test.log
-    └── opensta_test.log
+  │ ├── gtkwave_waveform.png     
+  │ ├── magic_demo.png            
+├── logs/
+  │ ├── yosys_install.log         
+  │ ├── iverilog_ok.log          
+  │ ├── opensta_report.log       
+  │ ├── docker_hello_world.log    
+  │ ├── openlane_make.log        
+  │ └── openlane_make_test.log    
+
 ```
 
 - Save terminal outputs under `logs/` for traceability.  
-- Paste screenshots of actual runs (not just versions) under `screenshots/`.  
-  - **GTKWave**: waveform opened from test VCD  
-  - **Magic**: minimal box design opened in GUI  
-  - **OpenSTA**: timing report from minimal example  
+- Paste screenshots of actual runs under `screenshots/`.  
 ---
 
 ## ⚠️ Troubleshooting Notes
