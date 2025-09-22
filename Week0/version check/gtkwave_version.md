@@ -1,6 +1,6 @@
 ### Quick CLI Output Verification
 
-The following output shows the installed versions of **GTKWave**:
+The following output shows the installed version of **GTKWave**:
 
 ```text
 GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
