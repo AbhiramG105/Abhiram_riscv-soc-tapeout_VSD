@@ -1,6 +1,6 @@
 # Logs
 
-This folder contains the log outputs of tools that do not have a GUI.                                                    
+This folder contains the log outputs of tools.                                                  
 The outputs are generated from simple test cases to verify correct installation.
 
 ---
