@@ -253,17 +253,19 @@ python3 -m venv -h
   ```
 - NGSpice simple circuit
   ```
-  # Create a basic RC circuit netlist
-  echo '* RC circuit exampleV1 in 0 DC 5
+   # Create a basic RC circuit netlist
+  echo '* RC low-pass filter example
+  V1 in 0 PULSE(0 5 0 0.1m 0.1m 1m 2m)
   R1 in out 1k
   C1 out 0 1u
-  .tran 1m 10m
+  .tran 0.1m 5m
   .control
   run
   plot v(out)
-  .quit
   .endc
   .end' > rc_circuit.sp
+
+  # Run in ngspice
   ngspice rc_circuit.sp
   ```
 - Magic VLSI minimal run
